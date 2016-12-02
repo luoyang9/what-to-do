@@ -1,0 +1,26 @@
+//Google fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+//variables
+$font: 'Roboto', sans-serif; //font weight: 300 - light, 400 - reg, 500 - med
+$light: 300;
+$reg: 400;
+$med: 500;
+
+.material-icons.md-18 { font-size: 16px; }
+.material-icons.red { color: #f44259; }
+
+body {
+	font-family: $font;
+	font-weight: 300;
+}
+
+h1, h2 {
+	font-family: $font;
+	font-weight: $med;
+}
+
+h3, h4, h5, h6 {
+	font-family: $font;
+	font-weight: $reg;
+}
