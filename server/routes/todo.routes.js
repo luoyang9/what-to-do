@@ -10,6 +10,9 @@ router.route('/todos').get(TodoController.getTodos);
 router.route('/todos').post(TodoController.addTodo);
 
 //Delete a todo
-router.route('/todos/:cuid').delete(TodoController.deleteTodo);
+router.route('/todos/:_id').delete(TodoController.deleteTodo);
+
+//Update a todo's 'complete' status
+router.route('/todos/:_id/complete').patch(TodoController.updateCompleteTodo);
 
 module.exports = router;

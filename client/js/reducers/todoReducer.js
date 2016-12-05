@@ -31,7 +31,7 @@ const todoReducer = (state=initialState, action) => {
 		case COMPLETE_TODO: {
 			return {
 				todos: state.todos.map((todo) => {
-					if(todo.cuid === action.payload.cuid) return {...todo, complete: true};
+					if(todo._id === action.payload.id) return {...todo, complete: true};
 					else return todo;
 				})
 			};
@@ -39,14 +39,14 @@ const todoReducer = (state=initialState, action) => {
 		case OPEN_TODO: {
 			return {
 				todos: state.todos.map((todo) => {
-					if(todo.cuid === action.payload.cuid) return {...todo, complete: false};
+					if(todo._id === action.payload.id) return {...todo, complete: false};
 					else return todo;
 				})
 			}
 		}
 		case DELETE_TODO: {
 			return {
-				todos: state.todos.filter( (todo) => todo.cuid !== action.payload.cuid )
+				todos: state.todos.filter( (todo) => todo._id !== action.payload.id )
 			};
 		}
 	}

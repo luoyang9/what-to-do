@@ -51,16 +51,27 @@ export default class Todos extends React.Component{
 		}
 	}
 
+	renderTodos(todos) {
+		return this.filterTodos(todos).map(todo => {
+			return <ListItem key={todo._id} 
+							leftCheckbox={<CheckBox checked={todo.complete} onCheck={this.todoCheckHandler.bind(this, todo._id)} />} 
+							rightIcon={<ActionDelete onTouchTap={this.deleteTodo.bind(this, todo._id)} style={{height: 24}}/>}>
+				<p style={this.getTodoStyle(todo.complete)}>{todo.text}</p>
+			</ListItem>;
+		})
+	}
+
+	filterTodos(todos) {
+		return todos.filter(todo => {
+
+		});
+	}
+
 	render() {
 		const { todos, fetching } = this.props;
 
-		const TodoItems = todos ? todos.map((todo) => {
-			return <ListItem key={todo.cuid} 
-							leftCheckbox={<CheckBox onCheck={this.todoCheckHandler.bind(this, todo.cuid)} />} 
-							rightIcon={<ActionDelete onTouchTap={this.deleteTodo.bind(this, todo.cuid)} style={{height: 24}}/>}>
-				<p style={this.getTodoStyle(todo.complete)}>{todo.text}</p>
-			</ListItem>;
-		}) : null;
+		const FetchingText = <p> Loading todos... </p>;
+		const TodoItems = todos ? this.renderTodos(todos) : null;
 
 		return (
 			<div>
@@ -68,7 +79,7 @@ export default class Todos extends React.Component{
 				<RaisedButton onTouchTap={this.createTodo.bind(this)} label="Create Todo" primary={true} style={{marginTop: 15}}/>
 				<h1>Todos</h1>
 				<List>
-					{TodoItems}
+					{fetching ? FetchingText : TodoItems}
 				</List>
 			</div>
 		);

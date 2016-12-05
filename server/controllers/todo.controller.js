@@ -1,5 +1,4 @@
 var Todo = require('../models/todo.js');
-var cuid = require('cuid');
 var sanitizeHtml = require('sanitize-html');
 
 module.exports = { 
@@ -35,14 +34,28 @@ module.exports = {
 		const newTodo = new Todo(req.body.todo);
 
 		newTodo.text = sanitizeHtml(newTodo.text);
-
 		newTodo.complete = false;
-		newTodo.cuid = cuid();
+
 		newTodo.save(function(err, saved) {
 			if(err) {
 				res.status(500).send(err);
 			}
 			res.json({todo: saved});
+		})
+	},
+
+	/**
+	 * Update a todo's 'complete' status
+	 * @param req
+	 * @param res
+	 * @returns void
+	 */
+	updateCompleteTodo: function(req, res) {
+		Todo.update({ _id: req.params._id }, { complete: req.body.complete }, function(err, raw) {
+			if(err) {
+				res.status(500).send(err);
+			}	
+			res.status(204).end();
 		})
 	},
 
@@ -53,7 +66,7 @@ module.exports = {
 	 * @returns void
 	 */
 	deleteTodo: function(req, res) {
-	  Todo.findOne({ cuid: req.params.cuid }).exec(function(err, todo) {
+	  Todo.findById(req.params._id).exec(function(err, todo) {
 	    if (err) {
 	      res.status(500).send(err);
 	    }

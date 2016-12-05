@@ -39,7 +39,7 @@ export function createTodo(todo) {
 
 export function createTodoRequest(todo) {
 	return (dispatch) => {
-		return callAPI('todos', 'post', {
+		return callAPI('todos', 'POST', {
 			todo: {
 				text: todo.text
 			}
@@ -47,35 +47,51 @@ export function createTodoRequest(todo) {
 	}
 }
 
-export function completeTodo(cuid) {
+export function completeTodo(id) {
 	return {
 		type: COMPLETE_TODO,
 		payload: {
-			cuid
+			id
 		}
 	}
 }
 
-export function openTodo(cuid) {
+export function completeTodoRequest(id) {
+	return (dispatch) => {
+		return callAPI(`todos/${id}/complete`, 'PATCH', {
+			complete: true
+		}).then(() => dispatch(completeTodo(id)));
+	}
+}
+
+export function openTodo(id) {
 	return {
 		type: OPEN_TODO,
 		payload: {
-			cuid
+			id
 		}
 	}
 }
 
-export function deleteTodo(cuid) {
+export function openTodoRequest(id) {
+	return (dispatch) => {
+		return callAPI(`todos/${id}/complete`, 'PATCH', {
+			complete: false
+		}).then(() => dispatch(openTodo(id)));
+	}
+}
+
+export function deleteTodo(id) {
 	return {
 		type: DELETE_TODO,
 		payload: {
-			cuid
+			id
 		}
 	}
 }
 
-export function deleteTodoRequest(cuid) {
+export function deleteTodoRequest(id) {
 	return (dispatch) => {
-		return callAPI(`todos/${cuid}`, 'delete').then(() => dispatch(deleteTodo(cuid)));
+		return callAPI(`todos/${id}`, 'DELETE').then(() => dispatch(deleteTodo(id)));
 	}
 }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { createTodoRequest, fetchTodos, deleteTodoRequest, completeTodo, openTodo } from '../actions/TodoActions'
+import { createTodoRequest, fetchTodos, deleteTodoRequest, completeTodoRequest, openTodoRequest } from '../actions/TodoActions'
 import Todos from './Todos'
 
 const mapStateToProps = (state) => {
@@ -21,10 +21,10 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(deleteTodoRequest(id));
 		},
 		completeTodo: (id) => {
-			dispatch(completeTodo(id));
+			dispatch(completeTodoRequest(id));
 		},
 		openTodo: (id) => {
-			dispatch(openTodo(id))
+			dispatch(openTodoRequest(id))
 		}
 	}
 }
