@@ -41,7 +41,8 @@ export function createTodoRequest(todo) {
 	return (dispatch) => {
 		return callAPI('todos', 'POST', {
 			todo: {
-				text: todo.text
+				text: todo.text,
+				tags: todo.tags
 			}
 		}).then(res => dispatch(createTodo(res.todo)));
 	}
