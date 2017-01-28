@@ -1,4 +1,6 @@
 var Todo = require('../models/todo.js');
+var Tag = require('../models/tag.js');
+var _ = require('lodash');
 var sanitizeHtml = require('sanitize-html');
 
 module.exports = { 
@@ -31,17 +33,34 @@ module.exports = {
 	 		res.status(403).end();
 		}
 
-		const newTodo = new Todo(req.body.todo);
+		let { text, tags } = req.body.todo; 
+		const newTodo = new Todo();
 
-		newTodo.text = sanitizeHtml(newTodo.text);
+		newTodo.text = sanitizeHtml(text);
 		newTodo.complete = false;
 
-		newTodo.save(function(err, saved) {
+		let tagPartitions = _.partition(tags, function(tag) { 
+			return !!tag._id; 
+		});
+
+		//create new tag documents for new tags
+		Tag.create(tagPartitions[1], function(err, savedTags) {
 			if(err) {
 				res.status(500).send(err);
 			}
-			res.json({todo: saved});
-		})
+
+			let tagIds = tagPartitions[0].concat(savedTags.map(function(tag) {
+				return tag._id;
+			}));
+			newTodo.tags = tagIds;
+
+			newTodo.save(function(err, saved) {
+				if(err) {
+					res.status(500).send(err);
+				}
+				res.json({todo: saved});
+			});
+		});
 	},
 
 	/**

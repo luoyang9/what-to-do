@@ -2,8 +2,8 @@ import React from "react";
 import { List, ListItem } from 'material-ui/List';
 import CheckBox from 'material-ui/Checkbox';
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton'
-import ActionDelete from 'material-ui/svg-icons/action/delete'
+import RaisedButton from 'material-ui/RaisedButton';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
 
 import "../../stylesheets/todos.scss";
 
@@ -22,7 +22,8 @@ export default class Todos extends React.Component{
 
 	createTodo() {
 		this.props.createTodo({
-			text: this.state.newTodo
+			text: this.state.newTodo,
+			tags: [{name:"Tag1"}, {name:"Tag2"}]
 		});
 		this.setState({
 			newTodo: ""

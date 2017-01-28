@@ -27,7 +27,8 @@ dump.rdb
 public/*
 
 # Distribution dir
-dist
+dist/
+client/client.min.js
 
 # Code coverage dir used by tools like istanbul
 coverage/
