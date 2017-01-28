@@ -25,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		openTodo: (id) => {
 			dispatch(openTodoRequest(id))
+		},
+		createTag: () => {
+			dispatch(createTagRequest(tag))
 		}
 	}
 }

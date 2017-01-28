@@ -33,6 +33,16 @@ export default class Todos extends React.Component{
 		this.props.deleteTodo(id);
 	}
 
+	createTag() {
+		this.props.createTag(id);
+	}
+
+	keyDownHandler(e) {
+		if(e.keyCode === 13) {
+			this.createTodo();
+		}
+	}
+
 	textFieldHandler(e) {
 		this.setState({
 			newTodo: e.target.value
@@ -57,13 +67,14 @@ export default class Todos extends React.Component{
 							leftCheckbox={<CheckBox checked={todo.complete} onCheck={this.todoCheckHandler.bind(this, todo._id)} />} 
 							rightIcon={<ActionDelete onTouchTap={this.deleteTodo.bind(this, todo._id)} style={{height: 24}}/>}>
 				<p style={this.getTodoStyle(todo.complete)}>{todo.text}</p>
+				<TextField /><span onTouchTap={this.createTag.bind(this)}>+</span>
 			</ListItem>;
 		})
 	}
 
 	filterTodos(todos) {
 		return todos.filter(todo => {
-
+			return true;
 		});
 	}
 
@@ -75,7 +86,7 @@ export default class Todos extends React.Component{
 
 		return (
 			<div>
-				<TextField fullWidth={true} value={this.state.newTodo} onChange={this.textFieldHandler.bind(this)} floatingLabelText="New Todo"/>
+				<TextField fullWidth={true} value={this.state.newTodo} onKeyDown={this.keyDownHandler.bind(this)} onChange={this.textFieldHandler.bind(this)} floatingLabelText="New Todo"/>
 				<RaisedButton onTouchTap={this.createTodo.bind(this)} label="Create Todo" primary={true} style={{marginTop: 15}}/>
 				<h1>Todos</h1>
 				<List>
@@ -84,4 +95,9 @@ export default class Todos extends React.Component{
 			</div>
 		);
 	}
+}
+
+Todos.propTypes = {
+	todos: React.PropTypes.array,
+	fetching: React.PropTypes.bool
 }

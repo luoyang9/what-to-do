@@ -9,7 +9,8 @@ var ReactDOMServer = require('react-dom/server');
 var { createStore } = require('redux');
 
 var serverConfig = require('./config');
-var todo = require('./routes/todo.routes.js')
+var todoRoutes = require('./routes/todo.routes.js');
+var tagRoutes = require('./routes/tag.routes.js');
 
 var app = new express();
 
@@ -28,7 +29,8 @@ mongoose.connect(serverConfig.mongoURL, function(err) {
 app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "../client")));
-app.use('/api', todo);
+app.use('/api/todos', todoRoutes);
+app.use('/api/tags', tagRoutes);
 
 
 app.get('/', (req, res, next) => {
